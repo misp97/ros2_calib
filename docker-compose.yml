@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  ros2_calib:
+    image: ros2_calib:latest
+    container_name: ros2_calib_container
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ~/.Xauthority:/root/.Xauthority
+      - /tmp/.docker.xauth:/tmp/.docker.xauth
+      - ./bags:/bags
+    entrypoint: ["/bin/bash"]
+    environment:
+      DISPLAY: $DISPLAY
+      XAUTHORITY: /tmp/.docker.xauth
+    stdin_open: true
+    tty: true
