@@ -908,7 +908,10 @@ class CalibrationWidget(QWidget):
             )
             cloud_arr = cloud_arr[valid_mask]
             self.points_xyz = np.vstack([cloud_arr["x"], cloud_arr["y"], cloud_arr["z"]]).T
-            self.intensities = cloud_arr["intensity"]
+            if "intensity" in cloud_arr.dtype.names:
+                self.intensities = cloud_arr["intensity"]
+            else:
+                self.intensities = np.zeros(self.points_xyz.shape[0])
             if self.intensities.size > 0:
                 # Set initial min/max values based on current colorization mode
                 self._update_min_max_values_for_mode()
